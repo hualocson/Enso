@@ -34,6 +34,7 @@ router.route('/').get(async (req, res, next) => {
 router.route('/').post(async (req, res, next) => {
     try {
         const { name, prompt, photo } = createPostSchema.parse(req.body)
+        console.log('[TEMP DEBUG] photo field length:', photo?.length, 'type:', typeof photo)
         const { secure_url } = await imageService.uploadImage(photo)
         const newPost = await postRepository.create({ name, prompt, photo: secure_url })
         res.status(201).json({ success: true, data: newPost })
@@ -42,6 +43,7 @@ router.route('/').post(async (req, res, next) => {
             next(new AppError(400, error.errors.map(e => e.message).join(', ')))
             return
         }
+        console.error('[TEMP DEBUG] POST /api/v1/posts caught error:', error)
         next(error)
     }
 })
