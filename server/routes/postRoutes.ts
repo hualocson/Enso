@@ -1,9 +1,8 @@
 import express from 'express'
-import * as dotenv from 'dotenv'
 import { v2 as cloudinary } from 'cloudinary'
-import Post from '../mongodb/models/post.js'
-
-dotenv.config()
+import { z } from 'zod'
+import { postRepository } from '../repositories/post.repository.js'
+import { AppError } from '../lib/errors.js'
 
 const router = express.Router()
 
@@ -13,36 +12,43 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-router.route('/').get(async (req, res) => {
-    try {
-        const posts = await Post.find({})
+const createPostSchema = z.object({
+    name: z.string().min(1).max(100),
+    prompt: z.string().min(1).max(1000),
+    photo: z.string().min(1),
+})
 
-        res.status(200).json({ success: true, data: posts })
+const listPostsSchema = z.object({
+    page: z.coerce.number().int().positive().optional(),
+    limit: z.coerce.number().int().positive().max(100).optional(),
+})
+
+router.route('/').get(async (req, res, next) => {
+    try {
+        const query = listPostsSchema.parse(req.query)
+        const result = await postRepository.list(query)
+        res.status(200).json({ success: true, ...result })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error instanceof Error ? error.message : 'Something went wrong',
-        })
+        if (error instanceof z.ZodError) {
+            next(new AppError(400, error.errors.map(e => e.message).join(', ')))
+            return
+        }
+        next(error)
     }
 })
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(async (req, res, next) => {
     try {
-        const { name, prompt, photo } = req.body
-
+        const { name, prompt, photo } = createPostSchema.parse(req.body)
         const photoUrl = await cloudinary.uploader.upload(photo)
-
-        const newPost = await Post.create({ name, prompt, photo: photoUrl.url })
-
-        res.status(201).json({
-            success: true,
-            data: newPost,
-        })
+        const newPost = await postRepository.create({ name, prompt, photo: photoUrl.url })
+        res.status(201).json({ success: true, data: newPost })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error instanceof Error ? error.message : 'Something went wrong',
-        })
+        if (error instanceof z.ZodError) {
+            next(new AppError(400, error.errors.map(e => e.message).join(', ')))
+            return
+        }
+        next(error)
     }
 })
 
