@@ -1,4 +1,4 @@
-# AI Image Generator
+# enso
 
 See per-project agent instructions:
 

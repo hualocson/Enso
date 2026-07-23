@@ -1,7 +1,7 @@
-# AI Image Generator — AGENTS.md
+# enso — AGENTS.md
 
 ## Project Overview
-Full-stack AI image generation app: React + Vite + TypeScript frontend, Express + TypeScript backend, MongoDB + Cloudinary storage, Cloudflare Workers AI (FLUX.1 Schnell) for generation.
+Full-stack AI image generation app (enso): React + Vite + TypeScript frontend, Express + TypeScript backend, MongoDB + Cloudinary storage, Cloudflare Workers AI (FLUX.1 Schnell) for generation.
 
 ## Tech Stack
 | Layer | Tech |

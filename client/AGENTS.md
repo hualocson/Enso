@@ -1,4 +1,4 @@
-# AI Image Generator — Client
+# enso — Client
 
 ## Commands
 - `npm run dev` — Start Vite dev server

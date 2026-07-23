@@ -1,7 +1,8 @@
-# Image AI generator
+# enso
 ![Project Image](./assets/homepage.png)
 
 ![Project Image](./assets/postpage.png)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -9,16 +10,16 @@
 - [Installation](#installation)
 - [Usage](#usage)
 
-## Introdution
-AI Image Generator is a web application built with ReactJS for the front-end and a simple Node.js Express API. The application utilizes the OpenAI API to generate images based on user-inputted text.
+## Introduction
+enso is a full-stack AI image generation app: React + TypeScript frontend, Express + TypeScript backend, MongoDB + Cloudinary storage, and Cloudflare Workers AI (FLUX.1 Schnell) for generation.
 
 ---
 ## Features
-- Text-to-Image Generation: The AI Image Generator allows users to input text and generates corresponding images using the OpenAI language model. It leverages the power of AI to transform textual descriptions into visual representations.
+- **Text-to-Image Generation**: Generate images from text prompts using Cloudflare Workers AI with the FLUX.1 Schnell model.
 
-- User-Friendly Interface: The web application provides a user-friendly interface where users can easily input their desired text and visualize the generated images. The responsive design ensures a seamless experience across different devices.
+- **Gallery & Sharing**: Browse generated images in a responsive gallery with search/filter. Share your creations by saving them to the gallery.
 
-- Customizable Output: Users have the option to customize the output by adjusting parameters such as image size, color palette, or style. This allows for more control over the generated images to match specific requirements.
+- **Responsive Design**: Built with Tailwind CSS for a seamless experience across devices.
 
 ## Installation
 
@@ -34,12 +35,11 @@ AI Image Generator is a web application built with ReactJS for the front-end and
       ```bash
       npm install
       ```
-
-2. Navigate to the client directory:
+4. Navigate to the client directory:
       ```bash
       cd ../client
       ```
-3. Install the required dependencies for client:
+5. Install the required dependencies for client:
       ```bash
       npm install
       ```
@@ -47,13 +47,24 @@ AI Image Generator is a web application built with ReactJS for the front-end and
 ---
 ## Usage
 
-1. Make sure you have set up your OpenAI API key by setting the `OPENAI_API_KEY` environment variable.
-
-2. Make sure you have set up your Cloudinary API key by setting the `CLOUDINARY_API_KEY` environment variable.
-
-3. Run the script with the following command in both client and server folder:
-   ```bash
-   npm start
+1. Set up your environment variables in `server/.env`:
+   ```env
+   CF_API_KEY=your_cloudflare_api_token
+   CF_ACCOUNT_ID=your_cloudflare_account_id
+   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+   CLOUDINARY_API_KEY=your_cloudinary_api_key
+   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+   MONGO_URL=your_mongodb_connection_string
    ```
 
-Open your web browser and visit http://localhost:3000 to access the Image AI generator website.
+2. Start the server:
+   ```bash
+   cd server && npm run dev
+   ```
+
+3. Start the client (in a separate terminal):
+   ```bash
+   cd client && npm run dev
+   ```
+
+4. Open http://localhost:5173 to use enso.
