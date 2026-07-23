@@ -13,3 +13,5 @@ export function getRandomPrompt(prompt: string): string {
 export async function downloadImage(_id: string, photo: string): Promise<void> {
     FileSave.saveAs(photo, `download-${_id}.jpg`)
 }
+
+export { default as getErrorMessage } from './error'
