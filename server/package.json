@@ -18,7 +18,6 @@
     "dotenv": "16.4.7",
     "express": "4.22.2",
     "mongoose": "8.24.1",
-    "openai": "4.82.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
