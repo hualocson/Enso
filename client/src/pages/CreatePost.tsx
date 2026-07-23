@@ -2,8 +2,9 @@ import React, { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { preview } from '../assets'
-import { getRandomPrompt } from '../utils'
+import { getRandomPrompt, getErrorMessage } from '../utils'
 import { FormField, Loader } from '../components'
+import { toast } from 'sonner'
 
 interface FormData {
     name: string
@@ -39,12 +40,12 @@ const CreatePost = () => {
                     photo: `data:image/jpeg;base64,${data.photo}`,
                 })
             } catch (error) {
-                alert(error)
+                toast.error(getErrorMessage(error))
             } finally {
                 setGeneratingImg(false)
             }
         } else {
-            alert('Please enter a prompt')
+            toast.warning('Please enter a prompt')
         }
     }
     const handleSubmit = async (e: React.FormEvent) => {
@@ -64,12 +65,12 @@ const CreatePost = () => {
                 await response.json()
                 navigate('/')
             } catch (error) {
-                alert(error)
+                toast.error(getErrorMessage(error))
             } finally {
                 setLoading(false)
             }
         } else {
-            alert('Please enter a prompt and generate an image')
+            toast.warning('Please enter a prompt and generate an image')
         }
     }
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
