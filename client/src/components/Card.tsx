@@ -1,4 +1,3 @@
-import React from 'react'
 import { download } from '../assets'
 import { downloadImage } from '../utils'
 
