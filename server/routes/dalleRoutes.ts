@@ -1,12 +1,9 @@
 import express from 'express'
 import * as dotenv from 'dotenv'
-import OpenAI from 'openai'
 
 dotenv.config()
 
 const router = express.Router()
-
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 router.route('/').get((req, res) => {
     res.send('hello from dalle route')
@@ -15,14 +12,29 @@ router.route('/').get((req, res) => {
 router.route('/').post(async (req, res) => {
     try {
         const { prompt } = req.body
-        const response = await openai.images.generate({
-            prompt,
-            n: 1,
-            size: '1024x1024',
-            response_format: 'b64_json',
-        })
-        const image = response.data?.[0]?.b64_json
-        res.status(200).json({ photo: image })
+
+        const response = await fetch(
+            `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/run/@cf/black-forest-labs/flux-1-schnell`,
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${process.env.CF_API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt,
+                    steps: 4,
+                }),
+            }
+        )
+
+        if (!response.ok) {
+            const errBody = await response.json().catch(() => ({}));
+            throw new Error(errBody.errors?.[0]?.message || `Cloudflare API returned ${response.status}`);
+        }
+
+        const data = await response.json() as { result: { image: string } }
+        res.status(200).json({ photo: data.result.image })
     } catch (error) {
         console.log(error)
         res.status(500).send(
