@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 import { Card, FormField, Loader } from '../components'
+import { getErrorMessage } from '../utils'
 
 interface Post {
     _id: string
@@ -50,7 +52,7 @@ const Home = () => {
                 setAllPosts(result.data.reverse())
             }
         } catch (err) {
-            alert(err)
+            toast.error(getErrorMessage(err))
         } finally {
             setLoading(false)
         }
