@@ -1,9 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import { Card, FormField, Loader } from '../components'
 
-const RenderCards = ({ data, title }) => {
-    if (data?.length > 0) {
+interface Post {
+    _id: string
+    name: string
+    prompt: string
+    photo: string
+}
+
+interface RenderCardsProps {
+    data: Post[] | null
+    title: string
+}
+
+const RenderCards = ({ data, title }: RenderCardsProps) => {
+    if (data && data.length > 0) {
         return data.map((post) => <Card key={post._id} {...post} />)
     }
 
@@ -16,11 +28,11 @@ const RenderCards = ({ data, title }) => {
 
 const Home = () => {
     const [loading, setLoading] = useState(false)
-    const [allPosts, setAllPosts] = useState(null)
+    const [allPosts, setAllPosts] = useState<Post[] | null>(null)
 
     const [searchText, setSearchText] = useState('')
-    const [searchTimeout, setSearchTimeout] = useState(null)
-    const [searchedResults, setSearchedResults] = useState(null)
+    const [searchTimeout, setSearchTimeout] = useState<number | undefined>(undefined)
+    const [searchedResults, setSearchedResults] = useState<Post[] | null>(null)
 
     const fetchPosts = async () => {
         setLoading(true)
@@ -48,24 +60,23 @@ const Home = () => {
         fetchPosts()
     }, [])
 
-    const handleSearchChange = (e) => {
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         clearTimeout(searchTimeout)
         setSearchText(e.target.value)
 
-        setSearchTimeout(
-            setTimeout(() => {
-                const searchResult = allPosts.filter(
-                    (item) =>
-                        item.name
-                            .toLowerCase()
-                            .includes(searchText.toLowerCase()) ||
-                        item.prompt
-                            .toLowerCase()
-                            .includes(searchText.toLowerCase()),
-                )
-                setSearchedResults(searchResult)
-            }, 500),
-        )
+        const timeoutId = setTimeout(() => {
+            const searchResult = (allPosts ?? []).filter(
+                (item) =>
+                    item.name
+                        .toLowerCase()
+                        .includes(searchText.toLowerCase()) ||
+                    item.prompt
+                        .toLowerCase()
+                        .includes(searchText.toLowerCase()),
+            )
+            setSearchedResults(searchResult)
+        }, 500)
+        setSearchTimeout(timeoutId)
     }
 
     return (
