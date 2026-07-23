@@ -21,12 +21,14 @@ app.get('/', async (req, res) => {
 
 const startServer = async () => {
     try {
-        await connectDB(process.env.MONGO_URL!)
+        const mongoUrl = process.env.MONGO_URL
+        if (!mongoUrl) throw new Error('MONGO_URL environment variable is required')
+        await connectDB(mongoUrl)
         app.listen(8080, () =>
             console.log('Server is running on http://localhost:8080'),
         )
     } catch (error) {
-        console.log(error)
+        console.error('Failed to start server:', error)
     }
 }
 
