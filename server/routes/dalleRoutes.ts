@@ -13,6 +13,10 @@ router.route('/').post(async (req, res) => {
     try {
         const { prompt } = req.body
 
+        if (!prompt) {
+            return res.status(400).json({ error: 'Prompt is required' })
+        }
+
         const response = await fetch(
             `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/run/@cf/black-forest-labs/flux-1-schnell`,
             {
