@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { preview } from '../assets'
 import { getRandomPrompt } from '../utils'
 import { FormField, Loader } from '../components'
 
+interface FormData {
+    name: string
+    prompt: string
+    photo: string
+}
+
 const CreatePost = () => {
     const navigate = useNavigate()
-    const [form, setForm] = useState({ name: '', prompt: '', photo: '' })
+    const [form, setForm] = useState<FormData>({ name: '', prompt: '', photo: '' })
     const [loading, setLoading] = useState(false)
     const [generatingImg, setGeneratingImg] = useState(false)
 
@@ -41,7 +47,7 @@ const CreatePost = () => {
             alert('Please enter a prompt')
         }
     }
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (form.prompt && form.photo) {
             setLoading(true)
@@ -66,7 +72,7 @@ const CreatePost = () => {
             alert('Please enter a prompt and generate an image')
         }
     }
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
     const handleSurpriseMe = () => {
