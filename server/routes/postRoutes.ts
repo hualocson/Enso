@@ -1,16 +1,10 @@
 import express from 'express'
-import { v2 as cloudinary } from 'cloudinary'
 import { z } from 'zod'
 import { postRepository } from '../repositories/post.repository.js'
 import { AppError } from '../lib/errors.js'
+import { imageService } from '../services/image.service.js'
 
 const router = express.Router()
-
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-})
 
 const createPostSchema = z.object({
     name: z.string().min(1).max(100),
@@ -40,8 +34,8 @@ router.route('/').get(async (req, res, next) => {
 router.route('/').post(async (req, res, next) => {
     try {
         const { name, prompt, photo } = createPostSchema.parse(req.body)
-        const photoUrl = await cloudinary.uploader.upload(photo)
-        const newPost = await postRepository.create({ name, prompt, photo: photoUrl.url })
+        const { secure_url } = await imageService.uploadImage(photo)
+        const newPost = await postRepository.create({ name, prompt, photo: secure_url })
         res.status(201).json({ success: true, data: newPost })
     } catch (error) {
         if (error instanceof z.ZodError) {
