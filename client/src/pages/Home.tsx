@@ -120,7 +120,7 @@ const Home = () => {
                                 :
                             </h2>
                         )}
-                        <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3">
+                        <div className="columns-1 xs:columns-2 sm:columns-3 lg:columns-4 gap-x-3">
                             {searchText ? (
                                 <RenderCards
                                     data={searchedResults}
