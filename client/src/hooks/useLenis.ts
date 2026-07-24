@@ -1,21 +1,23 @@
 import { useEffect, useRef } from 'react'
-import Lenis, { type LenisOptions } from '@studio-freight/lenis'
+import Lenis from '@studio-freight/lenis'
 
 export const useLenis = (): Lenis | null => {
     const lenisRef = useRef<Lenis | null>(null)
 
     useEffect(() => {
         const lenis = new Lenis({
-            lerp: 0.1,
-            smoothWheel: true,
-            touchMultiplier: 2,
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
             smoothTouch: false,
-            normalizeWheel: true,
-        } as LenisOptions)
+            touchMultiplier: 2,
+        })
 
         lenisRef.current = lenis
 
-        function raf(time: number): void {
+        function raf(time: number) {
             lenis.raf(time)
             requestAnimationFrame(raf)
         }
@@ -24,8 +26,11 @@ export const useLenis = (): Lenis | null => {
 
         return () => {
             lenis.destroy()
+            lenisRef.current = null
         }
     }, [])
 
     return lenisRef.current
 }
+
+export default useLenis

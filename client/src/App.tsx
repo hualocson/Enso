@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Home, CreatePost } from './pages'
-import { Header } from './components'
-import Footer from './components/Footer'
+import { Header, Footer } from './components'
+import { LenisProvider, useLenisContext } from './context'
 import { useLenis } from './hooks'
 
-const App = () => {
-    const lenis = useLenis()
+const AppInner = () => {
+    const lenis = useLenisContext()
 
     useEffect(() => {
         if (!lenis) return
@@ -32,6 +32,16 @@ const App = () => {
             </main>
             <Footer />
         </BrowserRouter>
+    )
+}
+
+const App = () => {
+    const lenis = useLenis()
+
+    return (
+        <LenisProvider>
+            <AppInner />
+        </LenisProvider>
     )
 }
 
