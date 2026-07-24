@@ -5,7 +5,7 @@ import { Card, Loader } from '../components'
 import { getErrorMessage, api } from '../utils'
 
 interface Post {
-  _id: string
+  id: string
   name: string
   prompt: string
   photo: string
@@ -18,7 +18,7 @@ interface RenderCardsProps {
 
 const RenderCards = ({ data, title }: RenderCardsProps) => {
   if (data && data.length > 0) {
-    return data.map((post) => <Card key={post._id} {...post} />)
+    return data.map((post) => <Card key={post.id} {...post} />)
   }
 
   return (
@@ -50,14 +50,21 @@ const Home = () => {
   }, [])
 
   return (
-    <section className="max-w-7xl mx-auto">
-      <div className="text-center">
-        <h1 className="font-extrabold text-foreground text-[48px]">
-          Inspiration
-        </h1>
-        <p className="mt-2 text-foreground-secondary text-[18px]">
-          Find ideas. Remix prompts. Create something new.
-        </p>
+    <section className="max-w-7xl mx-auto mt-32 mb-44">
+      <div className='space-y-2 mb-32'>
+        <span>
+          Gallery
+        </span>
+
+        <div className="flex items-end justify-between gap-8">
+          <h1 className="font-thin ml-10 text-foreground text-6xl">
+            Inspiration
+          </h1>
+          <p className="text-foreground-secondary text-lg indent-6">
+            Explore beautiful creations and share your own <br /> with the community.
+          </p>
+        </div>
+
       </div>
 
       <div className="mt-10">
@@ -67,7 +74,7 @@ const Home = () => {
           </div>
         ) : (
           <div
-            className='lg:columns-4 columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4'
+            className='lg:columns-4 columns-1 sm:columns-2 md:columns-3 gap-2 space-y-2'
           >
             <RenderCards
               data={allPosts}
