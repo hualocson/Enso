@@ -19,7 +19,7 @@ const Footer = () => {
 
         <nav className="flex items-center gap-6">
           <a
-            href="https://github.com/yourusername/enso"
+            href="https://github.com/hualocson/enso"
             target="_blank"
             rel="noopener noreferrer"
             className="transition hover:text-neutral-900 dark:hover:text-white"
@@ -28,7 +28,7 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://yourportfolio.com"
+            href="https://locson-me.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             className="transition hover:text-neutral-900 dark:hover:text-white"
