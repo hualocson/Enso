@@ -10,13 +10,14 @@ interface CardProps {
 
 const Card = ({ _id, name, prompt, photo }: CardProps) => {
   return (
-    <article className="rounded-sm overflow-hidden relative isolate group">
+    <article className="rounded-xl overflow-hidden relative isolate group">
       <img
-        className="w-full rounded-sm h-auto"
+        className="w-full rounded-[inherit] h-full"
         src={photo}
         alt={prompt}
       />
-      <div className="group-hover:flex flex-col max-h-[60%] hidden absolute bottom-0 left-0 right-0 bg-foreground p-4 rounded-md">
+      <span className='absolute inset-0 ring-1 rounded-[inherit] ring-black/10 dark:ring-white/10 z-10 ring-inset' />
+      <div className="group-hover:flex flex-col max-h-[60%] hidden absolute bottom-0 left-0 right-0 bg-foreground p-4 rounded-md z-20">
         <p className="text-surface text-md overflow-y-auto prompt">
           {prompt}
         </p>
