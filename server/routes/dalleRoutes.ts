@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv'
 
 import { IMAGE_SIZES } from '../lib/imageSizes.js'
 import { generateImageSchnell, generateImageDev } from '../services/cloudflare.js'
+import { AppError } from '../lib/errors.js'
 
 dotenv.config()
 
@@ -12,12 +13,16 @@ router.route('/').get((req, res) => {
     res.send('hello from dalle route')
 })
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(async (req, res, next) => {
     try {
         const { prompt, size } = req.body
 
         if (!prompt) {
-            return res.status(400).json({ error: 'Prompt is required' })
+            return res.status(400).json({
+                success: false,
+                message: 'Prompt is required',
+                statusCode: 400,
+            })
         }
 
         const useSchnell = !size || size === 'square'
@@ -30,7 +35,9 @@ router.route('/').post(async (req, res) => {
 
             if (!dimensions) {
                 return res.status(400).json({
-                    error: `Invalid size "${size}". Supported: ${Object.keys(IMAGE_SIZES).join(', ')}`,
+                    success: false,
+                    message: `Invalid size "${size}". Supported: ${Object.keys(IMAGE_SIZES).join(', ')}`,
+                    statusCode: 400,
                 })
             }
 
@@ -38,10 +45,7 @@ router.route('/').post(async (req, res) => {
             res.status(200).json({ photo })
         }
     } catch (error) {
-        console.log(error)
-        res.status(500).send(
-            error instanceof Error ? error.message : 'Something went wrong',
-        )
+        next(error instanceof AppError ? error : new AppError(500, error instanceof Error ? error.message : 'Something went wrong'))
     }
 })
 
