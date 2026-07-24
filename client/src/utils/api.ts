@@ -1,30 +1,30 @@
-const BASE_URL = 'http://localhost:8080'
+const BASE_URL = import.meta.env.VITE_API_URL
 
 async function request<T>(
-    method: string,
-    path: string,
-    body?: unknown,
+  method: string,
+  path: string,
+  body?: unknown,
 ): Promise<T> {
-    const response = await fetch(`${BASE_URL}${path}`, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: body ? JSON.stringify(body) : undefined,
-    })
+  const response = await fetch(`${BASE_URL}${path}`, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
+  })
 
-    const json = await response.json()
+  const json = await response.json()
 
-    if (!response.ok) {
-        throw new Error(
-            (json.message as string) ??
-                (json.error as string) ??
-                `Request failed with status ${response.status}`,
-        )
-    }
+  if (!response.ok) {
+    throw new Error(
+      (json.message as string) ??
+      (json.error as string) ??
+      `Request failed with status ${response.status}`,
+    )
+  }
 
-    return (json.data ?? json) as T
+  return (json.data ?? json) as T
 }
 
 export const api = {
-    get: <T>(path: string) => request<T>('GET', path),
-    post: <T>(path: string, body: unknown) => request<T>('POST', path, body),
+  get: <T>(path: string) => request<T>('GET', path),
+  post: <T>(path: string, body: unknown) => request<T>('POST', path, body),
 }
