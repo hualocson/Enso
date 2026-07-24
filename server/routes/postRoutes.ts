@@ -8,7 +8,7 @@ const router = express.Router()
 
 const createPostSchema = z.object({
     name: z.string().min(1).max(100),
-    prompt: z.string().min(1).max(1000),
+    prompt: z.string().min(1).max(5000),
     photo: z.string().min(1),
 })
 

@@ -1,6 +1,9 @@
 import express from 'express'
 import * as dotenv from 'dotenv'
 
+import { IMAGE_SIZES } from '../lib/imageSizes.js'
+import { generateImageSchnell, generateImageDev } from '../services/cloudflare.js'
+
 dotenv.config()
 
 const router = express.Router()
@@ -11,34 +14,29 @@ router.route('/').get((req, res) => {
 
 router.route('/').post(async (req, res) => {
     try {
-        const { prompt } = req.body
+        const { prompt, size } = req.body
 
         if (!prompt) {
             return res.status(400).json({ error: 'Prompt is required' })
         }
 
-        const response = await fetch(
-            `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/ai/run/@cf/black-forest-labs/flux-1-schnell`,
-            {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${process.env.CF_API_KEY}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    prompt,
-                    steps: 4,
-                }),
+        const useSchnell = !size || size === 'square'
+
+        if (useSchnell) {
+            const photo = await generateImageSchnell(prompt)
+            res.status(200).json({ photo })
+        } else {
+            const dimensions = IMAGE_SIZES[size as keyof typeof IMAGE_SIZES]
+
+            if (!dimensions) {
+                return res.status(400).json({
+                    error: `Invalid size "${size}". Supported: ${Object.keys(IMAGE_SIZES).join(', ')}`,
+                })
             }
-        )
 
-        if (!response.ok) {
-            const errBody = await response.json().catch(() => ({}));
-            throw new Error(errBody.errors?.[0]?.message || `Cloudflare API returned ${response.status}`);
+            const photo = await generateImageDev(prompt, dimensions)
+            res.status(200).json({ photo })
         }
-
-        const data = await response.json() as { result: { image: string } }
-        res.status(200).json({ photo: data.result.image })
     } catch (error) {
         console.log(error)
         res.status(500).send(

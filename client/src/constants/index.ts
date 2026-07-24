@@ -1,3 +1,12 @@
+export const IMAGE_SIZES = {
+    square: { width: 1024, height: 1024, label: 'Square' },
+    landscape: { width: 1920, height: 1080, label: 'Landscape' },
+    portrait: { width: 1080, height: 1920, label: 'Portrait' },
+    photo: { width: 1620, height: 1080, label: 'Photo' },
+} as const
+
+export type ImageSizeKey = keyof typeof IMAGE_SIZES
+
 export const surpriseMePrompts = [
     'an armchair in the shape of an avocado',
     'a surrealist dream-like oil painting by Salvador Dalí of a cat playing checkers',
