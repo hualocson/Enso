@@ -27,6 +27,7 @@ src/
 - **Imports**: No extension for `.tsx`/`.ts` files; relative imports from barrel files
 - **State**: `useState` + `useEffect` only (no external state lib)
 - **Styles**: Inline Tailwind utility classes; custom classes (`card`, `prompt`) in `index.css`
+- **Class merge**: `cn` utility (`clsx` + `tailwind-merge`) from `src/utils/cn.ts` for all className logic
 - **Naming**: PascalCase for components, camelCase for functions/vars, UPPER_SNAKE for constants
 - **Indentation**: 4 spaces
 - **API calls**: `fetch` to `http://localhost:8080` (hardcoded)
@@ -42,4 +43,4 @@ src/
 - No tests or testing framework exists
 - No environment variable config for API URL — update each `fetch` if port changes
 - Tailwind custom `xs` breakpoint at 480px
-- Inter font loaded from `https://rsms.me/inter/inter.css` (external CDN)
+- Fugaz One (headings) + Work Sans (body) via Google Fonts

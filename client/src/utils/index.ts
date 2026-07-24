@@ -15,3 +15,4 @@ export async function downloadImage(_id: string, photo: string): Promise<void> {
 }
 
 export { default as getErrorMessage } from './error'
+export { cn } from './cn'

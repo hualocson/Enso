@@ -2,8 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-    font-family: 'Inter', sans-serif;
+:root {
+    --background: #F4F1EC;
+    --surface: #FCFAF7;
+    --surface-secondary: #ECE7E1;
+
+    --foreground: #141312;
+    --foreground-secondary: #5E5752;
+    --muted: #9A938D;
+
+    --border: #DDD5CD;
+
+    --accent: #E77A57;
+    --accent-hover: #D96A45;
+
+    --secondary-accent: #B8CBE3;
+
+    --success: #5B8F6D;
+    --warning: #C79B4A;
+    --danger: #B85A4D;
+}
+
+@layer base {
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Fugaz One', sans-serif;
+        text-wrap: balance;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
 }
 
 @media screen and (min-width: 480px) {
