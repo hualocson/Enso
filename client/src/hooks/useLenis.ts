@@ -1,36 +1,55 @@
-import { useEffect, useRef } from 'react'
-import Lenis from '@studio-freight/lenis'
+import { useEffect, useRef, useState } from 'react'
+import Lenis from 'lenis'
 
-export const useLenis = (): Lenis | null => {
-    const lenisRef = useRef<Lenis | null>(null)
+export function useLenis(): Lenis | null {
+    const [lenis, setLenis] = useState<Lenis | null>(null)
+    const rafRef = useRef<number>()
 
     useEffect(() => {
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            gestureDirection: 'vertical',
-            smooth: true,
-            smoothTouch: false,
+        const lenisInstance = new Lenis({
+            lerp: 0.1,
+            smoothWheel: true,
             touchMultiplier: 2,
+            syncTouch: false,
+            wheelMultiplier: 1,
         })
 
-        lenisRef.current = lenis
+        setLenis(lenisInstance)
 
         function raf(time: number) {
-            lenis.raf(time)
-            requestAnimationFrame(raf)
+            try {
+                lenisInstance.raf(time)
+            } catch {
+                // ignore RAF errors during unmount
+            }
+            rafRef.current = requestAnimationFrame(raf)
         }
 
-        requestAnimationFrame(raf)
+        rafRef.current = requestAnimationFrame(raf)
+
+        const onScrollStart = () => {
+            lenisInstance.start()
+        }
+
+        const onScrollEnd = () => {
+            lenisInstance.stop()
+        }
+
+        lenisInstance.on('scroll', onScrollStart)
+        lenisInstance.on('scroll', onScrollEnd)
 
         return () => {
-            lenis.destroy()
-            lenisRef.current = null
+            lenisInstance.off('scroll', onScrollStart)
+            lenisInstance.off('scroll', onScrollEnd)
+            if (rafRef.current) {
+                cancelAnimationFrame(rafRef.current)
+            }
+            lenisInstance.destroy()
+            setLenis(null)
         }
     }, [])
 
-    return lenisRef.current
+    return lenis
 }
 
 export default useLenis

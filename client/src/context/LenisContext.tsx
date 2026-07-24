@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, ReactNode } from 'react'
-import Lenis from '@studio-freight/lenis'
+import Lenis from 'lenis'
 import { useLenis } from '../hooks'
 
 interface LenisContextValue {
@@ -38,3 +38,9 @@ export const useLenisContext = (): Lenis => {
 }
 
 export default LenisProvider
+
+declare global {
+    interface Window {
+        __lenis__?: Lenis
+    }
+}
