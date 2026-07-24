@@ -1,55 +1,36 @@
-import { useEffect, useRef, useState } from 'react'
-import Lenis from 'lenis'
+import { useEffect, useRef } from "react";
+import Lenis from "lenis";
 
-export function useLenis(): Lenis | null {
-    const [lenis, setLenis] = useState<Lenis | null>(null)
-    const rafRef = useRef<number>()
+export function useLenis() {
+  const lenisRef = useRef<Lenis | null>(null);
+  const rafRef = useRef<number>();
 
-    useEffect(() => {
-        const lenisInstance = new Lenis({
-            lerp: 0.1,
-            smoothWheel: true,
-            touchMultiplier: 2,
-            syncTouch: false,
-            wheelMultiplier: 1,
-        })
+  useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.1,
+      smoothWheel: true,
+      touchMultiplier: 2,
+      syncTouch: false,
+    });
 
-        setLenis(lenisInstance)
+    lenisRef.current = lenis;
 
-        function raf(time: number) {
-            try {
-                lenisInstance.raf(time)
-            } catch {
-                // ignore RAF errors during unmount
-            }
-            rafRef.current = requestAnimationFrame(raf)
-        }
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafRef.current = requestAnimationFrame(raf);
+    };
 
-        rafRef.current = requestAnimationFrame(raf)
+    rafRef.current = requestAnimationFrame(raf);
 
-        const onScrollStart = () => {
-            lenisInstance.start()
-        }
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
 
-        const onScrollEnd = () => {
-            lenisInstance.stop()
-        }
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
 
-        lenisInstance.on('scroll', onScrollStart)
-        lenisInstance.on('scroll', onScrollEnd)
-
-        return () => {
-            lenisInstance.off('scroll', onScrollStart)
-            lenisInstance.off('scroll', onScrollEnd)
-            if (rafRef.current) {
-                cancelAnimationFrame(rafRef.current)
-            }
-            lenisInstance.destroy()
-            setLenis(null)
-        }
-    }, [])
-
-    return lenis
+  return lenisRef.current;
 }
-
-export default useLenis
