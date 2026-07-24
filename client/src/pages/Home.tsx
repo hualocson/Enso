@@ -67,7 +67,7 @@ const Home = () => {
           </div>
         ) : (
           <div
-            className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 place-items-start grid-flow-row-dense"
+            className='lg:columns-4 columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4'
           >
             <RenderCards
               data={allPosts}
