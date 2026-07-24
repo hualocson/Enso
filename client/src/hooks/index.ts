@@ -1,0 +1,1 @@
+export { useLenis } from './useLenis'

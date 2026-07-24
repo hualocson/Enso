@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.42",
     "clsx": "^2.1.1",
     "file-saver": "^2.0.5",
     "iconoir-react": "^7.11.1",
