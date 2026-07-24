@@ -6,9 +6,10 @@ interface FormFieldProps {
     name: string
     placeholder?: string
     value: string
-    handleChange: (e: ChangeEvent<HTMLInputElement>) => void
+    handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
     isSurpriseMe?: boolean
     handleSurpriseMe?: () => void
+    rows?: number
 }
 
 const FormField = ({
@@ -20,7 +21,14 @@ const FormField = ({
     handleChange,
     isSurpriseMe,
     handleSurpriseMe,
+    rows = 5,
 }: FormFieldProps) => {
+    const inputClasses =
+        'bg-surface border border-border text-foreground text-sm rounded-lg focus:ring-accent focus:border-accent outline-none block w-full p-3'
+
+    const textareaClasses =
+        'bg-surface border border-border text-foreground text-sm rounded-lg focus:ring-accent focus:border-accent outline-none block w-full p-3 resize-none'
+
     return (
         <div>
             <div className="flex items-center gap-2 mb-2">
@@ -40,16 +48,29 @@ const FormField = ({
                     </button>
                 )}
             </div>
-            <input
-                type={type}
-                name={name}
-                id={name}
-                placeholder={placeholder}
-                value={value}
-                onChange={handleChange}
-                required
-                className="bg-surface border border-border text-foreground text-sm rounded-lg focus:ring-accent focus:border-accent outline-none block w-full p-3"
-            />
+            {type === 'textarea' ? (
+                <textarea
+                    name={name}
+                    id={name}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={handleChange}
+                    required
+                    rows={rows}
+                    className={textareaClasses}
+                />
+            ) : (
+                <input
+                    type={type}
+                    name={name}
+                    id={name}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                />
+            )}
         </div>
     )
 }

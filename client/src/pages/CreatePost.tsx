@@ -61,7 +61,7 @@ const CreatePost = () => {
             toast.warning('Please enter a prompt and generate an image')
         }
     }
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
     const handleSurpriseMe = () => {
@@ -94,7 +94,7 @@ const CreatePost = () => {
                         />{' '}
                         <FormField
                             labelName="Prompt"
-                            type="text"
+                            type="textarea"
                             name="prompt"
                             placeholder="a bowl of soup that looks like a monster, knitted out of wool"
                             value={form.prompt}
