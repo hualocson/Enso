@@ -10,9 +10,9 @@ interface CardProps {
 
 const Card = ({ _id, name, prompt, photo }: CardProps) => {
     return (
-        <div className="rounded-xl group relative shadow-card hover:shadow-cardhover card">
+        <div className="rounded-xl group relative shadow-card hover:shadow-cardhover break-inside-avoid mb-4 card">
             <img
-                className="w-full h-auto object-cover rounded-xl"
+                className="w-full h-auto rounded-xl"
                 src={photo}
                 alt={prompt}
             />
