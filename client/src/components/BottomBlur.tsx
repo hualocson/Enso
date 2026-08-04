@@ -1,6 +1,19 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 
 const BottomBlur = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 40);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!visible) return null;
+
   return (
     <div className='fixed z-10 left-0 right-0 h-[172px] select-none pointer-events-none bottom-0 flex-none'>
       <div className='absolute inset-0 overflow-hidden'>
