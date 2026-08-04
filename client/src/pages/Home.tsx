@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 
 import { Card, Loader } from '../components'
 import { getErrorMessage, api } from '../utils'
+import HeroSection from '../components/home/HeroSection'
 
 interface Post {
   id: string
@@ -50,7 +51,8 @@ const Home = () => {
   }, [])
 
   return (
-    <section className="max-w-7xl mx-auto mt-32 mb-44">
+    <section className="mb-44">
+      <HeroSection />
       <div className='space-y-2 mb-32'>
         <span>
           Gallery
