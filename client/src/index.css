@@ -42,6 +42,10 @@
 
 @layer base {
 
+  body {
+    background: var(--background);
+  }
+
   h1,
   h2,
   h3,
