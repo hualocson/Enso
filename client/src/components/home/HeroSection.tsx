@@ -49,7 +49,7 @@ const HeroSection = () => {
             delay: 0.5
           }}
           className="size-full bg-[#E77958] py-2 rounded-xl text-[#FCFAF7] font-semibold">
-          Explore
+          Step Inside
         </motion.button>
       </div>
 
