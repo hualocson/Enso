@@ -8,14 +8,14 @@ import { IMAGE_SIZES, type ImageSizeKey } from '../constants'
 import { toast } from 'sonner'
 
 interface FormData {
-  name: string
+  title: string
   prompt: string
   photo: string
 }
 
-const CreatePost = () => {
+const GenerateImage = () => {
   const navigate = useNavigate()
-  const [form, setForm] = useState<FormData>({ name: '', prompt: '', photo: '' })
+  const [form, setForm] = useState<FormData>({ title: '', prompt: '', photo: '' })
   const [loading, setLoading] = useState(false)
   const [generatingImg, setGeneratingImg] = useState(false)
   const [size, setSize] = useState<ImageSizeKey | ''>('square')
@@ -50,7 +50,7 @@ const CreatePost = () => {
       setLoading(true)
 
       try {
-        await api.post('/api/v1/posts', form)
+        await api.post('/api/v1/items/upload-ai-image', form)
         navigate('/')
       } catch (error) {
         toast.error(getErrorMessage(error))
@@ -86,11 +86,11 @@ const CreatePost = () => {
           {/* Left */}
           <div className="flex flex-col gap-5 lg:col-span-7">
             <FormField
-              labelName="Your Name"
+              labelName="Title"
               type="text"
-              name="name"
-              placeholder="Loc Son"
-              value={form.name}
+              name="title"
+              placeholder="Type something..."
+              value={form.title}
               handleChange={handleChange}
             />
 
@@ -170,4 +170,4 @@ const CreatePost = () => {
   )
 }
 
-export default CreatePost
+export default GenerateImage
