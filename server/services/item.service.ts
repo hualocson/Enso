@@ -21,6 +21,13 @@ export interface CreateUploadedFileInput {
   title?: string
 }
 
+
+export interface CreateUploadedAIImageInput {
+  title?: string
+  prompt: string
+  base64: string
+}
+
 export class ItemService {
   constructor(
     private readonly itemRepository: ItemRepository,
@@ -67,6 +74,33 @@ export class ItemService {
     } finally {
       // Remove temporary file after Cloudinary upload
       await fs.unlink(file.path).catch(() => { })
+    }
+  }
+
+
+  async createUploadedAIImage(
+    input: CreateUploadedAIImageInput,
+  ): Promise<ItemDocument> {
+    const { title, base64, prompt } = input
+    let publicId: string | undefined
+
+
+    try {
+      const uploaded = await imageService.uploadImage(base64)
+
+      return await this.itemRepository.create({
+        type: 'generated',
+        title,
+        imageUrl: uploaded.secure_url,
+        width: uploaded.width,
+        height: uploaded.height,
+        prompt
+      })
+    } catch (error) {
+      if (publicId) {
+        await imageService.deleteImage(publicId).catch(() => { })
+      }
+      throw error
     }
   }
 }

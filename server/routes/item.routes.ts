@@ -5,6 +5,8 @@ import { itemService } from '../services/item.service.js'
 import { z } from 'zod'
 import { AppError } from '../lib/errors.js'
 import { imageUpload } from '../middleware/uploadHandler.js'
+import { imageService } from '../services/image.service.js'
+import { itemRepository } from '../repositories/item.repository.js'
 
 const router = express.Router()
 
@@ -12,6 +14,13 @@ const router = express.Router()
 const listItemsSchema = z.object({
   page: z.coerce.number().int().positive().optional(),
   limit: z.coerce.number().int().positive().max(100).optional(),
+})
+
+
+const createItemAISchema = z.object({
+  title: z.string().min(1).max(100),
+  prompt: z.string().min(1).max(5000),
+  photo: z.string().min(1),
 })
 
 
@@ -51,6 +60,33 @@ router.get('/', async (req, res, next) => {
 })
 
 
+router.post('/upload-ai-image',
+  (async (req, res, next) => {
+    try {
+      const { title, prompt, photo } = createItemAISchema.parse(req.body)
+
+      const item = await itemService.createUploadedAIImage({
+        title,
+        prompt,
+        base64: photo
+      })
+
+      res.status(201).json({ success: true, data: item })
+    } catch (error) {
+
+
+      console.error('POST /api/v1/items/upload-ai-image caught error:', error)
+
+      if (error instanceof z.ZodError) {
+        next(new AppError(400, error.errors.map(e => e.message).join(', ')))
+        return
+      }
+      next(error)
+    }
+  })
+)
+
+
 router.post(
   '/upload-file',
   imageUpload.single('image'),
@@ -69,6 +105,7 @@ router.post(
       })
 
       res.status(201).json({
+        success: true,
         data: item
       })
 
@@ -81,5 +118,6 @@ router.post(
     }
   },
 )
+
 
 export default router
