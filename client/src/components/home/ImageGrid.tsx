@@ -1,0 +1,94 @@
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
+import { Card, Loader } from '../../components/'
+import { getErrorMessage, api } from '../../utils/'
+
+interface Post {
+  id: string
+  name: string
+  prompt: string
+  photo: string
+}
+
+interface RenderCardsProps {
+  data: Post[] | null
+  title: string
+}
+
+const getDeg = (index: number): string => {
+  switch (index % 8) {
+    case 0:
+      return "-2.2deg";
+    case 1:
+      return "1.8deg";
+    case 2:
+      return "-1.1deg";
+    case 3:
+      return "2.5deg";
+    case 4:
+      return "-0.7deg";
+    case 5:
+      return "1.3deg";
+    case 6:
+      return "-1.9deg";
+    case 7:
+      return "0.9deg";
+    default:
+      return "0deg";
+  }
+};
+
+const RenderCards = ({ data, title }: RenderCardsProps) => {
+  if (data && data.length > 0) {
+    return data.map((post, index) => <Card key={post.id} tilt={getDeg(index)} {...post} />)
+  }
+
+  return (
+    <h2 className="">
+      {title}
+    </h2>
+  )
+}
+const ImageGrid = () => {
+
+
+  const [loading, setLoading] = useState(false)
+  const [allPosts, setAllPosts] = useState<Post[] | null>(null)
+
+  const fetchPosts = async () => {
+    setLoading(true)
+
+    try {
+      const data = await api.get<Post[]>('/api/v1/posts')
+      setAllPosts(data.reverse())
+    } catch (err) {
+      toast.error(getErrorMessage(err))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+  return (
+    <div className="mt-80">
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <Loader />
+        </div>
+      ) : (
+        <div
+          className='columns-1 sm:columns-2 md:columns-3 gap-28 space-y-[140px]'
+        >
+          <RenderCards
+            data={allPosts}
+            title="No Posts Yet"
+          />
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default ImageGrid
