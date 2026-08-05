@@ -83,7 +83,7 @@ const ImageGrid = () => {
         </div>
       ) : (
         <div
-          className='columns-1 sm:columns-2 md:columns-3 gap-28 space-y-[140px]'
+          className='columns-1 sm:columns-2 md:columns-3 gap-32 space-y-[180px]'
         >
           <RenderCards
             data={allItems}
