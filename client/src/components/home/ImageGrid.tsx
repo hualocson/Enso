@@ -76,7 +76,7 @@ const ImageGrid = () => {
     fetchItems()
   }, [])
   return (
-    <div className="mt-80">
+    <div className="mt-80" id="image-grid">
       {loading ? (
         <div className="flex justify-center items-center">
           <Loader />

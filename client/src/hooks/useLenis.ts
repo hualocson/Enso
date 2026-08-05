@@ -1,22 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 
 export function useLenis() {
-  const lenisRef = useRef<Lenis | null>(null);
+  const [lenis, setLenis] = useState<Lenis | null>(null);
   const rafRef = useRef<number>();
 
   useEffect(() => {
-    const lenis = new Lenis({
+    const lenisInstance = new Lenis({
       lerp: 0.1,
       smoothWheel: true,
       touchMultiplier: 2,
       syncTouch: false,
     });
 
-    lenisRef.current = lenis;
+    setLenis(lenisInstance);
 
     const raf = (time: number) => {
-      lenis.raf(time);
+      lenisInstance.raf(time);
       rafRef.current = requestAnimationFrame(raf);
     };
 
@@ -27,10 +27,10 @@ export function useLenis() {
         cancelAnimationFrame(rafRef.current);
       }
 
-      lenis.destroy();
-      lenisRef.current = null;
+      lenisInstance.destroy();
+      setLenis(null);
     };
   }, []);
 
-  return lenisRef.current;
+  return lenis;
 }

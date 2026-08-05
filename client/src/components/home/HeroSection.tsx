@@ -2,8 +2,15 @@ import ImageReveal from "../animate/ImageReveal"
 import TextReveal from "../animate/TextReveal"
 import Logo from "../Logo"
 import { motion } from "motion/react"
+import { useLenisContext } from "../../context"
 
 const HeroSection = () => {
+  const lenis = useLenisContext()
+
+  const handleStepInside = () => {
+    lenis.scrollTo("#image-grid", { offset: -80, duration: 1.2 })
+  }
+
   return (
     <div className="h-svh grid grid-cols-[repeat(16,_minmax(0,1fr))] gap-5 grid-rows-12 py-4">
       <ImageReveal className="col-span-2 col-start-2 row-start-1" src="/home/image-1.png" />
@@ -48,7 +55,8 @@ const HeroSection = () => {
             ease: [0.25, 0.46, 0.45, 0.94],
             delay: 0.5
           }}
-          className="size-full bg-[#E77958] py-2 rounded-xl text-[#FCFAF7] font-semibold">
+          className="size-full bg-[#E77958] py-2 rounded-xl text-[#FCFAF7] font-semibold"
+          onClick={handleStepInside}>
           Step Inside
         </motion.button>
       </div>
