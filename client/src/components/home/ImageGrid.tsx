@@ -3,15 +3,19 @@ import { toast } from 'sonner'
 import { Card, Loader } from '../../components/'
 import { getErrorMessage, api } from '../../utils/'
 
-interface Post {
+interface Item {
   id: string
-  name: string
-  prompt: string
-  photo: string
+  type: 'upload' | 'generated'
+  title?: string
+  prompt?: string
+  imageUrl: string
+  width: number
+  height: number
+  createdAt: string
 }
 
 interface RenderCardsProps {
-  data: Post[] | null
+  data: Item[] | null
   title: string
 }
 
@@ -40,7 +44,7 @@ const getDeg = (index: number): string => {
 
 const RenderCards = ({ data, title }: RenderCardsProps) => {
   if (data && data.length > 0) {
-    return data.map((post, index) => <Card key={post.id} tilt={getDeg(index)} {...post} />)
+    return data.map((item, index) => <Card key={item.id} {...item} tilt={getDeg(index)} />)
   }
 
   return (
@@ -53,14 +57,14 @@ const ImageGrid = () => {
 
 
   const [loading, setLoading] = useState(false)
-  const [allPosts, setAllPosts] = useState<Post[] | null>(null)
+  const [allItems, setAllItems] = useState<Item[] | null>(null)
 
-  const fetchPosts = async () => {
+  const fetchItems = async () => {
     setLoading(true)
 
     try {
-      const data = await api.get<Post[]>('/api/v1/posts')
-      setAllPosts(data.reverse())
+      const data = await api.get<Item[]>('/api/v1/items?limit=100')
+      setAllItems(data)
     } catch (err) {
       toast.error(getErrorMessage(err))
     } finally {
@@ -69,7 +73,7 @@ const ImageGrid = () => {
   }
 
   useEffect(() => {
-    fetchPosts()
+    fetchItems()
   }, [])
   return (
     <div className="mt-80">
@@ -82,8 +86,8 @@ const ImageGrid = () => {
           className='columns-1 sm:columns-2 md:columns-3 gap-28 space-y-[140px]'
         >
           <RenderCards
-            data={allPosts}
-            title="No Posts Yet"
+            data={allItems}
+            title="No Items Yet"
           />
         </div>
       )}
