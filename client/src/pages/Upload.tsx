@@ -29,6 +29,7 @@ const UploadPage = () => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0] ?? null
+    e.target.value = ''
 
     if (selected) {
       if (!ALLOWED_MIME_TYPES.has(selected.type)) {
@@ -41,12 +42,9 @@ const UploadPage = () => {
         return
       }
 
-      if (preview) URL.revokeObjectURL(preview)
       setFile(selected)
       setPreview(URL.createObjectURL(selected))
     }
-
-    e.target.value = ''
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
