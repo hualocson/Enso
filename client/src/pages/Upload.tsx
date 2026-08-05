@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { MediaImage, Upload } from 'iconoir-react'
@@ -23,6 +23,10 @@ const UploadPage = () => {
   const [title, setTitle] = useState('')
   const [loading, setLoading] = useState(false)
 
+  useEffect(() => () => {
+    if (preview) URL.revokeObjectURL(preview)
+  }, [preview])
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0] ?? null
 
@@ -41,6 +45,8 @@ const UploadPage = () => {
       setFile(selected)
       setPreview(URL.createObjectURL(selected))
     }
+
+    e.target.value = ''
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,7 +86,7 @@ const UploadPage = () => {
         </p>
       </div>
 
-      <form className="mt-10 lg:mt-16" onSubmit={handleSubmit}>
+      <form className="mt-10 lg:mt-16" onSubmit={handleSubmit} noValidate>
         <div className="grid gap-10 lg:grid-cols-10">
           {/* Left */}
           <div className="flex flex-col gap-5 lg:col-span-7">
