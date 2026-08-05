@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home, CreatePost } from './pages'
+import { Home, CreatePost, Upload } from './pages'
 import Footer from './components/Footer'
 import { LenisProvider } from './context'
 import BottomBlur from './components/BottomBlur'
@@ -13,6 +13,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/upload" element={<Upload />} />
             </Routes>
           </div>
         </main>
