@@ -4,8 +4,8 @@ import cors from 'cors'
 import morgan from 'morgan'
 
 import connectDB, { disconnectDB } from './db/connect.js'
-import postRoutes from './routes/postRoutes.js'
-import dalleRoutes from './routes/dalleRoutes.js'
+import postRoutes from './routes/post.routes.js'
+import dalleRoutes from './routes/dalle.routes.js'
 import errorHandler from './middleware/errorHandler.js'
 
 
