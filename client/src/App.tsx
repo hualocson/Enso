@@ -1,23 +1,24 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home, CreatePost } from './pages'
-import { Header } from './components'
+import { Home, GenerateImage, Upload } from './pages'
 import Footer from './components/Footer'
 import { LenisProvider } from './context'
+import BottomBlur from './components/BottomBlur'
 
 const App = () => {
   return (
     <LenisProvider>
       <BrowserRouter>
-        <Header />
-        <main className="w-full bg-background min-h-[calc(100vh-49px)]">
-          <div className="max-w-7xl mx-auto sm:p-8 px-4 py-8">
+        <main className="w-full min-h-[calc(100vh-49px)]">
+          <div className="sm:px-8 px-4">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/gen-image" element={<GenerateImage />} />
+              <Route path="/upload" element={<Upload />} />
             </Routes>
           </div>
         </main>
         <Footer />
+        <BottomBlur />
       </BrowserRouter>
     </LenisProvider>
   )

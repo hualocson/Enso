@@ -19,12 +19,14 @@
     "express": "4.22.2",
     "mongoose": "8.24.1",
     "morgan": "^1.11.0",
+    "multer": "^2.2.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/cors": "2.8.17",
     "@types/express": "4.17.25",
     "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.2.0",
     "@types/node": "22.13.1",
     "tsx": "4.23.1",
     "typescript": "5.7.3"

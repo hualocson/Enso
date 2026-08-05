@@ -24,7 +24,32 @@ async function request<T>(
   return (json.data ?? json) as T
 }
 
+async function requestForm<T>(
+  method: string,
+  path: string,
+  formData: FormData,
+): Promise<T> {
+  const response = await fetch(`${BASE_URL}${path}`, {
+    method,
+    body: formData,
+  })
+
+  const json = await response.json()
+
+  if (!response.ok) {
+    throw new Error(
+      (json.message as string) ??
+      (json.error as string) ??
+      `Request failed with status ${response.status}`,
+    )
+  }
+
+  return (json.data ?? json) as T
+}
+
 export const api = {
   get: <T>(path: string) => request<T>('GET', path),
   post: <T>(path: string, body: unknown) => request<T>('POST', path, body),
+  postForm: <T>(path: string, formData: FormData) =>
+    requestForm<T>('POST', path, formData),
 }
