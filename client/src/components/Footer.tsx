@@ -26,7 +26,7 @@ const Footer = () => {
       </div>
 
       {/* Brand */}
-      <h2 className="text-3xl tracking-tight text-[#9B948C] md:text-9xl">
+      <h2 className="text-6xl tracking-tight text-[#9B948C] md:text-9xl">
         Enso<span className="font-sans text-6xl align-super">©</span>
       </h2>
     </div>

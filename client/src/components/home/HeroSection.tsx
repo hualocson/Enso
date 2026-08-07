@@ -12,7 +12,7 @@ const HeroSection = () => {
   }
 
   return (
-    <div className="h-svh grid grid-cols-12 md:grid-cols-[repeat(16,_minmax(0,1fr))] grid-rows-[repeat(14,_minmax(0,1fr))] gap-y-3 gap-x-2 md:gap-5 md:grid-rows-12 py-4">
+    <div className="h-[max(100svh,844px)] md:h-svh grid grid-cols-12 md:grid-cols-[repeat(16,_minmax(0,1fr))] grid-rows-[repeat(14,_minmax(0,1fr))] gap-y-3 gap-x-2 md:gap-5 md:grid-rows-12 py-4">
       <ImageReveal className="md:col-span-2 col-span-4 col-start-2 row-start-3 row-span-3 md:row-span-1 md:row-start-1" src="/home/image-1.png" />
 
       <div className="col-span-2 row-span-2 col-start-6 md:col-start-8 text-2xl text-primary place-self-center">
@@ -57,7 +57,7 @@ const HeroSection = () => {
             ease: [0.25, 0.46, 0.45, 0.94],
             delay: 0.5
           }}
-          className="size-full bg-[#E77958] py-2 rounded-xl text-[#FCFAF7] font-semibold"
+          className="size-full bg-[#E77958] rounded-xl text-[#FCFAF7] font-semibold"
           onClick={handleStepInside}>
           Step Inside
         </motion.button>
