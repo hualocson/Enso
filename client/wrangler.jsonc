@@ -1,8 +1,8 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "enso",
-  "compatibility_date": "2026-07-24",
+  "compatibility_date": "2026-08-07",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
   }
 }
