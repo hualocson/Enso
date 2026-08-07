@@ -29,16 +29,16 @@ const HeroSection = () => {
         <TextReveal text="Some ideas are easier to feel" className="text-sm" marginRight="4px" delay={0.5} />
         <TextReveal text="than to explain" delay={0.7} className="text-sm" marginRight="4px" />
       </p>
-      <div className="col-start-1 col-[14_/_span_16] row-start-4 text-center row-span-6 text-[160px] grid grid-cols-subgrid relative grid-rows-subgrid leading-[1.1] overflow-hidden">
+      <div className="col-start-1 col-[14_/_span_16] row-start-4 text-center row-span-6 text-[120px] 2xl:text-[160px] grid grid-cols-subgrid relative grid-rows-subgrid leading-[1.1] overflow-hidden">
         <div className="col-span-full row-span-3 flex items-end justify-center overflow-hidden">
           {/* <p>A world of</p> */}
-          <TextReveal text="A world of" className="text-[160px]" delay={0} duration={0.8} delayUnit={0.3} y={100} />
+          <TextReveal text="A world of" className="2xl:text-[160px] text-[120px]" delay={0} duration={0.8} delayUnit={0.3} y={100} />
         </div>
         <div className="relative col-span-full font-heading grid grid-cols-subgrid row-span-3 ">
           <p className="absolute inset-0 after:z-10 after:absolute after:inset-0 after:[-webkit-text-stroke-width:2px] after:[-webkit-text-fill-color:transparent] after:[-webkit-text-stroke-color:var(--background)] animate-[reveal-up_0.8s_var(--ease-minor-spring)] after:content-['imagination']"
           >imagination</p>
           <div className="col-span-2 col-start-8 z-0 absolute top-0 -translate-y-1/2 flex items-center justify-center isolate">
-            <ImageReveal className="w-[75%]" src="/home/image-3.png" />
+            <ImageReveal className="xl:w-[65%] w-2/3" src="/home/image-3.png" />
           </div>
 
         </div>
