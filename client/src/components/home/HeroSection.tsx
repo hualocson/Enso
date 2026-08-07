@@ -12,10 +12,10 @@ const HeroSection = () => {
   }
 
   return (
-    <div className="h-svh grid grid-cols-[repeat(16,_minmax(0,1fr))] gap-5 grid-rows-12 py-4">
-      <ImageReveal className="col-span-2 col-start-2 row-start-1" src="/home/image-1.png" />
+    <div className="h-svh grid grid-cols-12 md:grid-cols-[repeat(16,_minmax(0,1fr))] grid-rows-[repeat(14,_minmax(0,1fr))] gap-y-3 gap-x-2 md:gap-5 md:grid-rows-12 py-4">
+      <ImageReveal className="md:col-span-2 col-span-4 col-start-2 row-start-3 row-span-3 md:row-span-1 md:row-start-1" src="/home/image-1.png" />
 
-      <div className="col-span-2 row-span-2 col-start-8 text-2xl text-primary place-self-center">
+      <div className="col-span-2 row-span-2 col-start-6 md:col-start-8 text-2xl text-primary place-self-center">
         <div className="flex flex-col items-center justify-center">
           <Logo customImageClassName="size-20" />
           <h2 className="mt-[-16px] font-heading">Enso</h2>
@@ -23,30 +23,32 @@ const HeroSection = () => {
       </div>
 
 
-      <ImageReveal className="col-span-2 col-start-[14] row-start-2" src="/home/image-2.png" />
+      <ImageReveal className="md:col-span-2 col-span-4 col-start-8 md:col-start-[14] row-start-3 md:row-start-2" src="/home/image-2.png" />
 
-      <p className="col-span-4 text-sm col-start-7 text-center row-start-3 place-self-center">
+      <p className="md:col-span-4 col-span-full text-sm col-start-1 md:col-start-7 text-center row-start-6 md:row-start-3 place-self-center">
         <TextReveal text="Some ideas are easier to feel" className="text-sm" marginRight="4px" delay={0.5} />
         <TextReveal text="than to explain" delay={0.7} className="text-sm" marginRight="4px" />
       </p>
-      <div className="col-start-1 col-[14_/_span_16] row-start-4 text-center row-span-6 text-[120px] 2xl:text-[160px] grid grid-cols-subgrid relative grid-rows-subgrid leading-[1.1] overflow-hidden">
-        <div className="col-span-full row-span-3 flex items-end justify-center overflow-hidden">
+
+      {/* Center */}
+      <div className="col-span-full md:col-start-1 md:col-[14_/_span_16] row-start-7 row-span-3 md:row-start-4 md:row-span-6 text-center  text-6xl md:text-[120px] 2xl:text-[160px] grid grid-cols-subgrid relative grid-rows-2 md:grid-rows-subgrid leading-[1.1] overflow-hidden gap-y-4 md:gap-y-5">
+        <div className="col-span-full md:row-span-3 flex items-end justify-center overflow-hidden">
           {/* <p>A world of</p> */}
-          <TextReveal text="A world of" className="2xl:text-[160px] text-[120px]" delay={0} duration={0.8} delayUnit={0.3} y={100} />
+          <TextReveal text="A world of" className="2xl:text-[160px] text-6xl md:text-[120px]" delay={0} duration={0.8} delayUnit={0.3} y={100} />
         </div>
-        <div className="relative col-span-full font-heading grid grid-cols-subgrid row-span-3 ">
+        <div className="relative col-span-full font-heading grid grid-cols-subgrid md:row-span-3">
           <p className="absolute inset-0 after:z-10 after:absolute after:inset-0 after:[-webkit-text-stroke-width:2px] after:[-webkit-text-fill-color:transparent] after:[-webkit-text-stroke-color:var(--background)] animate-[reveal-up_0.8s_var(--ease-minor-spring)] after:content-['imagination']"
           >imagination</p>
-          <div className="col-span-2 col-start-8 z-0 absolute top-0 -translate-y-1/2 flex items-center justify-center isolate">
+          <div className="col-span-2 col-start-6 md:col-start-8 z-0 absolute top-0 -translate-y-1/3 md:-translate-y-1/2 flex items-center justify-center isolate">
             <ImageReveal className="xl:w-[65%] w-2/3" src="/home/image-3.png" />
           </div>
 
         </div>
       </div>
 
-      <ImageReveal className="col-span-2 col-start-1 row-start-8" src="/home/image-4.png" />
+      <ImageReveal className="col-span-4 md:col-span-2 md:col-start-1 md:row-start-8 row-start-12 row-span-3 md:row-span-1" src="/home/image-4.png" />
 
-      <div className="col-span-4 col-start-7 mx-8">
+      <div className="col-span-full md:col-span-4 md:col-start-7 mx-8">
         <motion.button
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -61,9 +63,9 @@ const HeroSection = () => {
         </motion.button>
       </div>
 
-      <ImageReveal className="col-span-2 col-end-[17] row-start-9" src="/home/image-5.png" />
+      <ImageReveal className="col-span-4 col-start-9 md:col-span-2 md:col-end-[17] md:row-start-9 row-start-12 row-span-3 md:row-span-1" src="/home/image-5.png" />
 
-      <p className="col-span-6 col-start-6 text-center text-sm row-end-13">
+      <p className="col-span-full md:col-span-6 md:col-start-6 text-center text-sm md:row-end-13">
         <TextReveal text="A space for the ideas that live somewhere" delay={0.5} className="text-sm" marginRight="4px" />
         <TextReveal text="between thought and reality" delay={0.7} className="text-sm" marginRight="4px" />
       </p>

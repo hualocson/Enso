@@ -76,14 +76,14 @@ const ImageGrid = () => {
     fetchItems()
   }, [])
   return (
-    <div className="mt-80" id="image-grid">
+    <div className="md:mt-80 mt-40" id="image-grid">
       {loading ? (
         <div className="flex justify-center items-center">
           <Loader />
         </div>
       ) : (
         <div
-          className='columns-1 sm:columns-2 md:columns-3 gap-32 space-y-[180px]'
+          className='columns-1 sm:columns-2 md:columns-3 md:gap-32 gap-12 space-y-[120px] md:space-y-[180px]'
         >
           <RenderCards
             data={allItems}
