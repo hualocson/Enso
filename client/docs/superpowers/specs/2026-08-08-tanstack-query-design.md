@@ -35,7 +35,7 @@ export const itemsOptions = queryOptions({
 | `useItems` | `useQuery(itemsOptions)` | exposes `data`, `isPending`, `error` |
 | `useUploadItem` | `useMutation(api.postForm /api/v1/items/upload-file)` | onSuccess → toast + invalidate + navigate |
 | `useGenerateImage` | `useMutation(api.post /api/v1/dalle)` | wraps `generateImage(prompt, size)`; returns processed `data:image/jpeg;base64,...` string; onError toasts |
-| `useShareAiImage` | `useMutation(api.post /api/v1/items/upload-ai-image)` | onSuccess → toast + invalidate + navigate |
+| `useShareAiImage` | `useMutation(api.post /api/v1/items/upload-ai-image)` | wraps `shareAiImage(form)`; onSuccess → toast + invalidate + navigate |
 
 - `api.ts` wrapper remains untouched as the base fetch layer; all queryFns/mutationFns delegate to it.
 - All four new hooks exported from the existing `src/hooks/index.ts` barrel.
