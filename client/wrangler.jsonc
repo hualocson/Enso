@@ -1,6 +1,7 @@
 {
   "name": "enso",
   "compatibility_date": "2026-08-07",
+  "main": "worker.ts",
   "cache": {
     "enabled": true
   },
