@@ -15,6 +15,8 @@ export default {
   ): Promise<Response> {
     const url = new URL(request.url)
 
+    console.log('Worker received:', request.method, url.pathname)
+
     if (url.pathname.startsWith('/api/')) {
       return handleApi(request, env, ctx)
     }
@@ -275,6 +277,8 @@ async function proxyRequest(
 
   const targetUrl =
     `${env.API_URL}${incomingUrl.pathname}${incomingUrl.search}`
+
+  console.log('Proxying to:', targetUrl)
 
   const response = await fetch(targetUrl, {
     method: request.method,
