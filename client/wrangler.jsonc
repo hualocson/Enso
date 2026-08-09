@@ -1,8 +1,15 @@
 {
   "name": "enso",
   "compatibility_date": "2026-08-07",
+  "cache": {
+    "enabled": true
+  },
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "API_URL": "https://enso-4w4m.onrender.com"
   }
 }
