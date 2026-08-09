@@ -1,14 +1,17 @@
 {
   "name": "enso",
   "compatibility_date": "2026-08-07",
-  "main": "worker.ts",
+  "main": "./worker.ts",
   "cache": {
     "enabled": true
   },
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ]
   },
   "vars": {
     "API_URL": "https://enso-4w4m.onrender.com"
