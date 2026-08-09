@@ -1,7 +1,5 @@
 # enso
-![Project Image](./assets/homepage.png)
-
-![Project Image](./assets/postpage.png)
+![Home Page](./assets/homepage.png)
 
 ## Table of Contents
 
