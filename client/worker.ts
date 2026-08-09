@@ -36,7 +36,7 @@ async function handleApi(
   // Cache only the public gallery list.
   if (
     request.method === 'GET' &&
-    url.pathname === '/api/items'
+    url.pathname === '/api/v1/items'
   ) {
     return getCachedItems(request, env, ctx)
   }
