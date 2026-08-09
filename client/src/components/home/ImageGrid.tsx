@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import { toast } from 'sonner'
-import { Card, Loader } from '../../components/'
+import { Card } from '../../components/'
 import { getErrorMessage } from '../../utils/'
 import { useItems } from '../../hooks/'
 import type { Item } from '../../api/'
+import ImageGridSkeleton from './ImageGridSkeleton'
 
 interface RenderCardsProps {
     data: Item[] | null
@@ -54,9 +55,7 @@ const ImageGrid = () => {
     return (
         <div className="md:mt-80 mt-40" id="image-grid">
             {isPending ? (
-                <div className="flex justify-center items-center">
-                    <Loader />
-                </div>
+                <ImageGridSkeleton />
             ) : (
                 <div
                     className='columns-1 sm:columns-2 md:columns-3 md:gap-32 gap-12 space-y-[120px] md:space-y-[180px]'
