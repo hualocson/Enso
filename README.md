@@ -1,5 +1,5 @@
 # enso
-![Home Page](./assets/homepage.png)
+![Home Page](./assets/home-page.png)
 
 ## Table of Contents
 
