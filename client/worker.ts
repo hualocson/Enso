@@ -276,7 +276,7 @@ async function proxyRequest(
   const targetUrl =
     `${env.API_URL}${incomingUrl.pathname}${incomingUrl.search}`
 
-  return fetch(targetUrl, {
+  const response = await fetch(targetUrl, {
     method: request.method,
     headers: request.headers,
     body:
@@ -284,6 +284,16 @@ async function proxyRequest(
         request.method === 'HEAD'
         ? undefined
         : request.body,
+  })
+
+  const headers = new Headers(response.headers)
+
+  headers.set('X-Enso-Proxy', 'Cloudflare-Worker')
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
   })
 }
 
