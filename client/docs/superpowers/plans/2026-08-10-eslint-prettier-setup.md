@@ -74,8 +74,9 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
+import { defineConfig } from 'eslint/config'
 
-export default tseslint.config(
+export default defineConfig(
   { ignores: ['dist'] },
   {
     files: ['**/*.{ts,tsx}'],
@@ -103,6 +104,7 @@ export default tseslint.config(
 Notes:
 - `reactHooks.configs.flat.recommended.rules` is the official v7 flat-config rules object (verified against v7.1.1: `{ plugins, rules }`).
 - `tseslint.configs.recommended` (NOT `recommendedTypeChecked`) — no project service, no tsconfig changes.
+- **Use `defineConfig` from `eslint/config`, NOT `tseslint.config()`** — `tseslint.config()` is deprecated in typescript-eslint v8.66. `defineConfig(...args)` accepts the same rest-arg/array shape and native `extends`; verified the `files` intersection vs override difference is behaviorally equivalent for this project's globs.
 - `eslint-config-prettier` must be the LAST element so it overrides earlier style rules.
 - `ignores: ['dist']` keeps the existing build output out of linting.
 

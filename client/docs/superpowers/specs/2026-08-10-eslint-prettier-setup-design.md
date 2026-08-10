@@ -32,8 +32,9 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
+import { defineConfig } from 'eslint/config'
 
-export default tseslint.config(
+export default defineConfig(
   { ignores: ['dist'] },
   {
     files: ['**/*.{ts,tsx}'],
@@ -59,6 +60,7 @@ export default tseslint.config(
 ```
 - `reactHooks.configs.flat.recommended` is the v7 official flat config object (`{ plugins, rules }`); spreading `.rules` into the same block keeps `plugins` registration with `react-refresh` in one place.
 - `tseslint.configs.recommended` (not `recommendedTypeChecked`) — no project service needed, fast, no `tsconfig` changes.
+- **`defineConfig` (not `tseslint.config`)**: `tseslint.config()` is deprecated in typescript-eslint v8.66 in favor of ESLint core's `defineConfig` from `eslint/config` (added in ESLint v9.22.0). `defineConfig(...args)` accepts the same rest-arg/array shape and native `extends` on config blocks. Behavior difference vs `tseslint.config`: `files` in extensions are **intersected** rather than overridden — verified against the installed `tseslint.configs.recommended` (`**/*.ts/.tsx/.mts/.cts`); the intersection with our `**/*.{ts,tsx}` yields identical coverage for this project.
 
 ### `.prettierrc.json`
 ```json
